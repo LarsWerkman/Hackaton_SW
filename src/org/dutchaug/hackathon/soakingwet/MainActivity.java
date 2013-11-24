@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
         latitude = 54.0d;
         longtitude = 4.0d;
         
-        AsyncTask<Double, Integer, String> data = new WDownloader().execute(latitude , longtitude);
+        AsyncTask<Double, Integer, Map<String,String>> data = new WDownloader().execute(latitude , longtitude);
         
     }
 
