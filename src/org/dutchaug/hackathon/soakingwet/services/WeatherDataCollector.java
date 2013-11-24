@@ -89,7 +89,7 @@ public class WeatherDataCollector {
 		Map<String, String> rainTypesComming = getRainTypeMap(precipitationForLatLong);
 		int iconId = R.drawable.ic_dry;
 		if(rainTypesComming.containsKey(EXTREME_RAIN)) {
-			iconId = R.drawable.ic_extreme_rain;
+			iconId = R.drawable.ic_drowned_kitty;
 		} else if(rainTypesComming.containsKey(HEAVY_RAIN)) {
 			iconId = R.drawable.ic_heavy_rain;
 		} else if(rainTypesComming.containsKey(RAIN)) {
