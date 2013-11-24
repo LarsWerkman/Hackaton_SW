@@ -8,5 +8,20 @@
     <string name="configuration_text">configuratoin text</string>
     <string name="extension_name">SoakingWet</string>
     <string name="preference_activity_title">SoakingWet preferences</string>
+    
+    <string-array name="weather_times">
+        <item>00</item>
+        <item>05</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+    </string-array>
 
 </resources>

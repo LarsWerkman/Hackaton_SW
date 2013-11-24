@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="WeatherClock">
+        <attr name="weather_wheel_radius" format="dimension" />
+        <attr name="weather_pointer_radius" format="dimension" />
+    </declare-styleable>
+    
+</resources>
