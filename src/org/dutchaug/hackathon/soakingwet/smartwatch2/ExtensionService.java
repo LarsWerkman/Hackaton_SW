@@ -33,6 +33,7 @@ Copyright (c) 2011-2013, Sony Mobile Communications AB
 package org.dutchaug.hackathon.soakingwet.smartwatch2;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.sonyericsson.extras.liveware.extension.util.control.ControlExtension;
 import com.sonyericsson.extras.liveware.extension.util.registration.DeviceInfoHelper;
@@ -41,7 +42,6 @@ import com.sonyericsson.extras.liveware.extension.util.registration.DeviceInfoHe
  * The Sample Extension Service handles registration and keeps track of all controls on all accessories.
  */
 public class ExtensionService extends com.sonyericsson.extras.liveware.extension.util.ExtensionService {
-
     public static final String EXTENSION_KEY = "org.dutchaug.hackathon.soakingwet.key";
 
     public ExtensionService() {
@@ -78,11 +78,21 @@ public class ExtensionService extends com.sonyericsson.extras.liveware.extension
         // First we check if the API level and screen size required for
         // SampleControlSmartWatch2 is supported
         boolean advancedFeaturesSupported = DeviceInfoHelper.isSmartWatch2ApiAndScreenDetected(this, hostAppPackageName);
+
         if (advancedFeaturesSupported) {
-            return new ControlSmartWatch2(hostAppPackageName, this, new Handler());
+            Handler handler = new Handler();
+            ControlSmartWatch2 controlSmartWatch2 = new ControlSmartWatch2(hostAppPackageName, this, handler);
+            return controlSmartWatch2;
         }
         else {
             throw new IllegalArgumentException("No control for: " + hostAppPackageName);
         }
     }
+
+    @Override
+    protected void onRefreshRequest() {
+        Log.e("waaa", "waaa$%@%#%");
+        super.onRefreshRequest();
+    }
+
 }

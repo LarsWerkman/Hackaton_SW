@@ -31,9 +31,6 @@
         <activity
             android:name="org.dutchaug.hackathon.soakingwet.smartwatch2.SmartWatchPreferenceActivity"
             android:label="@string/preference_activity_title" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
 
         <meta-data

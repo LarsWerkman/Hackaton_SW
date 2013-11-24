@@ -41,6 +41,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -60,8 +61,6 @@ import com.sonyericsson.extras.liveware.extension.util.control.ControlViewGroup;
 class ControlSmartWatch2 extends ControlExtension {
 
     private static final int MENU_ITEM_0 = 0;
-    private static final int MENU_ITEM_1 = 1;
-    private static final int MENU_ITEM_2 = 2;
 
     private Handler mHandler;
 
@@ -70,6 +69,7 @@ class ControlSmartWatch2 extends ControlExtension {
     private boolean mTextMenu = false;
     Bundle[] mMenuItemsText = new Bundle[3];
     Bundle[] mMenuItemsIcons = new Bundle[3];
+    private Location location;
 
     /**
      * Create sample control.
@@ -83,9 +83,11 @@ class ControlSmartWatch2 extends ControlExtension {
         if (handler == null) {
             throw new IllegalArgumentException("handler == null");
         }
+        this.location = location;
         mHandler = handler;
         setupClickables(context);
         initializeMenus();
+
     }
 
     private void setupClickables(Context context) {
@@ -99,13 +101,7 @@ class ControlSmartWatch2 extends ControlExtension {
     private void initializeMenus() {
         mMenuItemsText[0] = new Bundle();
         mMenuItemsText[0].putInt(Control.Intents.EXTRA_MENU_ITEM_ID, MENU_ITEM_0);
-        mMenuItemsText[0].putString(Control.Intents.EXTRA_MENU_ITEM_TEXT, "Item 1");
-        mMenuItemsText[1] = new Bundle();
-        mMenuItemsText[1].putInt(Control.Intents.EXTRA_MENU_ITEM_ID, MENU_ITEM_1);
-        mMenuItemsText[1].putString(Control.Intents.EXTRA_MENU_ITEM_TEXT, "Item 2");
-        mMenuItemsText[2] = new Bundle();
-        mMenuItemsText[2].putInt(Control.Intents.EXTRA_MENU_ITEM_ID, MENU_ITEM_2);
-        mMenuItemsText[2].putString(Control.Intents.EXTRA_MENU_ITEM_TEXT, "Item 3");
+        mMenuItemsText[0].putString(Control.Intents.EXTRA_MENU_ITEM_TEXT, "Refresh");
     }
 
     /**

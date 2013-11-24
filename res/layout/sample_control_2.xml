@@ -4,13 +4,13 @@
     android:layout_width="@dimen/smart_watch_2_control_width"
     android:layout_height="@dimen/smart_watch_2_control_height"
     tools:ignore="ContentDescription,PxUsage" >
-    
-   <ImageView
+
+    <ImageView
         android:id="@+id/animatedImage"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/sample_control_text_1"
