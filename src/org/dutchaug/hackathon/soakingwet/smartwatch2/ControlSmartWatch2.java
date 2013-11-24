@@ -32,13 +32,21 @@ Copyright (c) 2011-2013, Sony Mobile Communications AB
 
 package org.dutchaug.hackathon.soakingwet.smartwatch2;
 
+import java.io.ByteArrayOutputStream;
+
 import org.dutchaug.hackathon.soakingwet.R;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
+import android.widget.ImageView;
 
 import com.sonyericsson.extras.liveware.aef.control.Control;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlExtension;
@@ -51,16 +59,11 @@ import com.sonyericsson.extras.liveware.extension.util.control.ControlViewGroup;
  */
 class ControlSmartWatch2 extends ControlExtension {
 
-    private static final int ANIMATION_DELTA_MS = 500;
     private static final int MENU_ITEM_0 = 0;
     private static final int MENU_ITEM_1 = 1;
     private static final int MENU_ITEM_2 = 2;
 
     private Handler mHandler;
-
-    private boolean mIsShowingAnimation = false;
-
-    private Animation mAnimation = null;
 
     private ControlViewGroup mLayout = null;
 
@@ -127,7 +130,6 @@ class ControlSmartWatch2 extends ControlExtension {
 
     @Override
     public void onDestroy() {
-        stopAnimation();
         mHandler = null;
     };
 
@@ -152,60 +154,50 @@ class ControlSmartWatch2 extends ControlExtension {
         b4.putInt(Control.Intents.EXTRA_LAYOUT_REFERENCE, R.id.sample_control_text_4);
         b4.putString(Control.Intents.EXTRA_TEXT, "Lars");
 
-        Bundle[] data = new Bundle[4];
+        Bundle jouwPlaatje = new Bundle();
+        jouwPlaatje.putInt(Control.Intents.EXTRA_LAYOUT_REFERENCE, R.id.animatedImage);
 
+        byte[] bitmapdata = getWeatherClock();
+        jouwPlaatje.putByteArray(Control.Intents.EXTRA_DATA, bitmapdata);
+
+        Bundle[] data = new Bundle[4];
         data[0] = b1;
         data[1] = b4;
+        data[2] = jouwPlaatje;
 
         showLayout(R.layout.sample_control_2, data);
 
-        startAnimation();
     }
 
-    @Override
-    public void onPause() {
-        stopAnimation();
-    }
+    private byte[] getWeatherClock() {
+        LayoutInflater systemService = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView wc = (ImageView) systemService.inflate(R.layout.weather_clock, null);
 
-    private void toggleAnimation() {
-        if (mIsShowingAnimation) {
-            stopAnimation();
-        }
-        else {
-            startAnimation();
-        }
-    }
+        Bitmap bitmap = Bitmap.createBitmap(150, 150, Config.RGB_565);
+        Canvas canvas = new Canvas(bitmap);
 
-    /**
-     * Start showing animation on control.
-     */
-    private void startAnimation() {
-        if (!mIsShowingAnimation) {
-            mIsShowingAnimation = true;
-            mAnimation = new Animation();
-            mAnimation.run();
-        }
-    }
+        wc.setDrawingCacheEnabled(true);
 
-    /**
-     * Stop showing animation on control.
-     */
-    private void stopAnimation() {
-        if (mIsShowingAnimation) {
-            // Stop animation on accessory
-            if (mAnimation != null) {
-                mAnimation.stop();
-                mHandler.removeCallbacks(mAnimation);
-                mAnimation = null;
-            }
-            mIsShowingAnimation = false;
-        }
+        // Supply measurements
+        wc.measure(MeasureSpec.makeMeasureSpec(canvas.getWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(canvas.getHeight(), MeasureSpec.EXACTLY));
+
+        // Apply the measures so the layout would resize before drawing.
+        wc.layout(0, 0, 150, 150);
+
+        // and now the bmp object will actually contain the requested layout
+        canvas.drawBitmap(wc.getDrawingCache(), 0, 0, new Paint());
+
+        wc.draw(canvas);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bitmapdata = stream.toByteArray();
+        return bitmapdata;
     }
 
     @Override
     public void onTouch(final ControlTouchEvent event) {
         if (event.getAction() == Control.Intents.TOUCH_ACTION_RELEASE) {
-            toggleAnimation();
         }
     }
 
@@ -247,61 +239,5 @@ class ControlSmartWatch2 extends ControlExtension {
         }
         mTextMenu = !mTextMenu;
     }
-
-    /**
-     * The animation class shows an animation on the accessory. The animation runs until mHandler.removeCallbacks has been called.
-     */
-    private class Animation implements Runnable {
-
-        private int mIndex = 1;
-        private boolean mIsStopped = false;
-
-        /**
-         * Create animation.
-         */
-        Animation() {
-            mIndex = 1;
-        }
-
-        /**
-         * Stop the animation.
-         */
-        public void stop() {
-            mIsStopped = true;
-        }
-
-        @Override
-        public void run() {
-            int resourceId;
-            switch (mIndex) {
-                case 1:
-                    resourceId = R.drawable.ic_launcher;
-                    break;
-                default:
-                    resourceId = R.drawable.ic_launcher;
-                    break;
-            }
-            mIndex++;
-            if (mIndex > 4) {
-                mIndex = 1;
-            }
-
-            if (!mIsStopped) {
-                updateAnimation(resourceId);
-            }
-            if (mHandler != null && !mIsStopped) {
-                mHandler.postDelayed(this, ANIMATION_DELTA_MS);
-            }
-        }
-
-        /**
-         * Update the animation on the accessory. Only updates the part of the screen which contains the animation.
-         * 
-         * @param resourceId The new resource to show.
-         */
-        private void updateAnimation(int resourceId) {
-            sendImage(R.id.animatedImage, resourceId);
-        }
-    };
 
 }
