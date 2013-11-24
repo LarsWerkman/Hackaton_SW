@@ -4,6 +4,13 @@
     android:layout_width="@dimen/smart_watch_2_control_width"
     android:layout_height="@dimen/smart_watch_2_control_height"
     tools:ignore="ContentDescription,PxUsage" >
+    
+   <ImageView
+        android:id="@+id/animatedImage"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/sample_control_text_1"
@@ -15,12 +22,6 @@
         android:layout_marginTop="10px"
         android:textColor="@android:color/white"
         android:textSize="@dimen/smart_watch_2_text_size_large" />
-
-    <ImageView
-        android:id="@+id/animatedImage"
-        android:layout_width="150px"
-        android:layout_height="150px"
-        android:layout_centerInParent="true" />
 
     <TextView
         android:id="@+id/sample_control_text_4"

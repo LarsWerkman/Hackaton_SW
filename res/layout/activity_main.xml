@@ -14,4 +14,10 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
+    <org.dutchaug.hackathon.soakingwet.views.WeatherClock
+        android:id="@+id/weatherClock1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mainactivity_text" />
+
 </RelativeLayout>

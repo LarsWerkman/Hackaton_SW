@@ -10,9 +10,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 
-public class WeatherClock extends ImageView {
+public class WeatherClock extends View {
 
     /**
      * The radius of the weahter wheel.
@@ -84,6 +85,8 @@ public class WeatherClock extends ImageView {
             canvas.drawText(mWeatherTimes[i], pointerPosition[0], pointerPosition[1], mTextPaint);
             // mAngle = (float) (-Math.PI / 2);
         }
+        
+        
         // TODO Auto-generated method stub
         super.onDraw(canvas);
     }

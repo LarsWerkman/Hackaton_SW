@@ -173,7 +173,7 @@ class ControlSmartWatch2 extends ControlExtension {
         LayoutInflater systemService = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView wc = (ImageView) systemService.inflate(R.layout.weather_clock, null);
 
-        Bitmap bitmap = Bitmap.createBitmap(150, 150, Config.RGB_565);
+        Bitmap bitmap = Bitmap.createBitmap(170, 170, Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
 
         wc.setDrawingCacheEnabled(true);
@@ -182,7 +182,7 @@ class ControlSmartWatch2 extends ControlExtension {
         wc.measure(MeasureSpec.makeMeasureSpec(canvas.getWidth(), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(canvas.getHeight(), MeasureSpec.EXACTLY));
 
         // Apply the measures so the layout would resize before drawing.
-        wc.layout(0, 0, 150, 150);
+        wc.layout(0, 0, 170, 170);
 
         // and now the bmp object will actually contain the requested layout
         canvas.drawBitmap(wc.getDrawingCache(), 0, 0, new Paint());
