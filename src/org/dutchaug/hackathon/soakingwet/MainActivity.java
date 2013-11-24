@@ -30,7 +30,7 @@ import com.google.android.gms.location.LocationRequest;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainActivity extends FragmentActivity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
-
+    public static final String DATADATA = "message";
     // Milliseconds per second
     public static final int MILLISECONDS_PER_SECOND = 1000;
     // Update frequency in seconds
@@ -41,6 +41,8 @@ public class MainActivity extends FragmentActivity implements LocationListener, 
     public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationClient locationClient;
     private LocationRequest locationRequest;
+
+    public static String weatherText = "Heavy rain at 20:00";
 
     private double latitude;
     private double longtitude;
@@ -152,9 +154,6 @@ public class MainActivity extends FragmentActivity implements LocationListener, 
         // Report to the UI that the location was updated
         String msg = "Updated Location: " + Double.toString(location.getLatitude()) + "," + Double.toString(location.getLongitude());
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-
-        Intent refreshIntent = new Intent("REFRESH_REQUEST_INTENT");
-        sendBroadcast(refreshIntent);
     }
 
     class WDownloader extends AsyncTask<Double, Integer, Map<String, Integer>> {
@@ -176,7 +175,13 @@ public class MainActivity extends FragmentActivity implements LocationListener, 
         @Override
         protected void onPostExecute(Map<String, Integer> result) {
             imageView.setImageDrawable(getResources().getDrawable(weatherDataCollector.getIconForUpcomingWeather(result)));
-            description.setText(weatherDataCollector.getUpcommingWeather(result));
+            String upcommingWeather = weatherDataCollector.getUpcommingWeather(result);
+            description.setText(upcommingWeather);
+            MainActivity.weatherText = upcommingWeather;
+            Intent intent2 = new Intent("com.sonyericsson.extras.aef.widget.START_REFRESH_IMAGE_REQUEST");
+            intent2.putExtra(DATADATA, upcommingWeather);
+            // sendBroadcast(intent);
+            sendBroadcast(intent2);
         }
     }
 

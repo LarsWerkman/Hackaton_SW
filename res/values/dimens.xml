@@ -5,7 +5,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     
     <dimen name="weather_wheel_radius">124dp</dimen>
-    <dimen name="pointer_radius">14dp</dimen>
+    <dimen name="pointer_radius">6dp</dimen>
     <dimen name="weather_text_size">24sp</dimen>
 
 </resources>

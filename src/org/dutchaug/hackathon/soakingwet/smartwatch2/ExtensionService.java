@@ -32,6 +32,7 @@ Copyright (c) 2011-2013, Sony Mobile Communications AB
 
 package org.dutchaug.hackathon.soakingwet.smartwatch2;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 
@@ -71,6 +72,14 @@ public class ExtensionService extends com.sonyericsson.extras.liveware.extension
     @Override
     protected boolean keepRunningWhenConnected() {
         return false;
+    }
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        // TODO Auto-generated method stub
+        super.onStart(intent, startId);
+        
+        
     }
 
     @Override

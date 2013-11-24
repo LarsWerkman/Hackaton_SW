@@ -16,21 +16,11 @@
         android:id="@+id/sample_control_text_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="12px"
         android:layout_marginTop="10px"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/smart_watch_2_text_size_large" />
-
-    <TextView
-        android:id="@+id/sample_control_text_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10px"
-        android:layout_marginRight="12px"
+        android:gravity="center_horizontal|center_vertical"
         android:textColor="@android:color/white"
         android:textSize="@dimen/smart_watch_2_text_size_large" />
 

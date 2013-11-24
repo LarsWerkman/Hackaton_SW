@@ -31,9 +31,12 @@ Copyright (c) 2011-2013, Sony Mobile Communications AB
  */
 package org.dutchaug.hackathon.soakingwet.smartwatch2;
 
+import org.dutchaug.hackathon.soakingwet.MainActivity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * The extension receiver receives the extension intents and starts the extension service when it arrives.
@@ -42,6 +45,8 @@ public class ExtensionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
+        String stringExtra = intent.getStringExtra(MainActivity.DATADATA);
+        Log.d("onReceive", "" + stringExtra);
         intent.setClass(context, ExtensionService.class);
         context.startService(intent);
     }

@@ -34,6 +34,7 @@ package org.dutchaug.hackathon.soakingwet.smartwatch2;
 
 import java.io.ByteArrayOutputStream;
 
+import org.dutchaug.hackathon.soakingwet.MainActivity;
 import org.dutchaug.hackathon.soakingwet.R;
 
 import android.content.Context;
@@ -41,7 +42,6 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -69,7 +69,6 @@ class ControlSmartWatch2 extends ControlExtension {
     private boolean mTextMenu = false;
     Bundle[] mMenuItemsText = new Bundle[3];
     Bundle[] mMenuItemsIcons = new Bundle[3];
-    private Location location;
 
     /**
      * Create sample control.
@@ -83,7 +82,6 @@ class ControlSmartWatch2 extends ControlExtension {
         if (handler == null) {
             throw new IllegalArgumentException("handler == null");
         }
-        this.location = location;
         mHandler = handler;
         setupClickables(context);
         initializeMenus();
@@ -144,11 +142,9 @@ class ControlSmartWatch2 extends ControlExtension {
 
         Bundle b1 = new Bundle();
         b1.putInt(Control.Intents.EXTRA_LAYOUT_REFERENCE, R.id.sample_control_text_1);
-        b1.putString(Control.Intents.EXTRA_TEXT, "Hoi");
+        b1.putString(Control.Intents.EXTRA_TEXT, MainActivity.weatherText);
 
         Bundle b4 = new Bundle();
-        b4.putInt(Control.Intents.EXTRA_LAYOUT_REFERENCE, R.id.sample_control_text_4);
-        b4.putString(Control.Intents.EXTRA_TEXT, "Lars");
 
         Bundle jouwPlaatje = new Bundle();
         jouwPlaatje.putInt(Control.Intents.EXTRA_LAYOUT_REFERENCE, R.id.animatedImage);
