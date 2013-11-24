@@ -36,6 +36,7 @@ import java.io.ByteArrayOutputStream;
 
 import org.dutchaug.hackathon.soakingwet.MainActivity;
 import org.dutchaug.hackathon.soakingwet.R;
+import org.dutchaug.hackathon.soakingwet.views.WeatherClock;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -47,7 +48,6 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
-import android.widget.ImageView;
 
 import com.sonyericsson.extras.liveware.aef.control.Control;
 import com.sonyericsson.extras.liveware.extension.util.control.ControlExtension;
@@ -63,6 +63,7 @@ class ControlSmartWatch2 extends ControlExtension {
     private static final int MENU_ITEM_0 = 0;
 
     private Handler mHandler;
+    private WeatherClock wc;
 
     private ControlViewGroup mLayout = null;
 
@@ -140,6 +141,11 @@ class ControlSmartWatch2 extends ControlExtension {
     @Override
     public void onResume() {
 
+        createView();
+
+    }
+
+    private void createView() {
         Bundle b1 = new Bundle();
         b1.putInt(Control.Intents.EXTRA_LAYOUT_REFERENCE, R.id.sample_control_text_1);
         b1.putString(Control.Intents.EXTRA_TEXT, MainActivity.weatherText);
@@ -158,13 +164,13 @@ class ControlSmartWatch2 extends ControlExtension {
         data[2] = jouwPlaatje;
 
         showLayout(R.layout.sample_control_2, data);
-
     }
 
     private byte[] getWeatherClock() {
         LayoutInflater systemService = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ImageView wc = (ImageView) systemService.inflate(R.layout.weather_clock, null);
-
+        if (wc == null) {
+            wc = (WeatherClock) systemService.inflate(R.layout.weather_clock, null);
+        }
         Bitmap bitmap = Bitmap.createBitmap(170, 170, Config.RGB_565);
         Canvas canvas = new Canvas(bitmap);
 
@@ -190,6 +196,9 @@ class ControlSmartWatch2 extends ControlExtension {
     @Override
     public void onTouch(final ControlTouchEvent event) {
         if (event.getAction() == Control.Intents.TOUCH_ACTION_RELEASE) {
+            if (wc != null)
+                wc.changePointer(event.getX(), event.getX());
+            createView();
         }
     }
 
