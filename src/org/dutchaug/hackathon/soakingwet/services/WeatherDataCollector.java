@@ -68,8 +68,8 @@ public class WeatherDataCollector {
 		return drySmallMediumHeavyExtremeRain;
 	}
 	
-	public String getTimeToRain(double latitude, double longtitude) throws IOException {
-		Map<String, String> rainTypesComming = getRainTypeMap(getPrecipitationForLatLong(latitude, longtitude));
+	public String getUpcommingWeather(Map<String, Integer> precipitationForLatLong) {
+		Map<String, String> rainTypesComming = getRainTypeMap(precipitationForLatLong);
 		String commingUpNext = DRY;
 		if(rainTypesComming.containsKey(EXTREME_RAIN)) {
 			commingUpNext = String.format("%s at %s", EXTREME_RAIN, rainTypesComming.get(EXTREME_RAIN));
@@ -85,8 +85,8 @@ public class WeatherDataCollector {
 		return commingUpNext;
 	}
 	
-	public int getIconForUpcomingWeather(double latitude, double longtitude) throws IOException {
-		Map<String, String> rainTypesComming = getRainTypeMap(getPrecipitationForLatLong(latitude, longtitude));
+	public int getIconForUpcomingWeather(Map<String, Integer> precipitationForLatLong) {
+		Map<String, String> rainTypesComming = getRainTypeMap(precipitationForLatLong);
 		int iconId = R.drawable.ic_dry;
 		if(rainTypesComming.containsKey(EXTREME_RAIN)) {
 			iconId = R.drawable.ic_extreme_rain;

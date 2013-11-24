@@ -9,9 +9,16 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <TextView
         android:id="@+id/mainactivity_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/description"
         android:text="@string/hello_world" />
 
     <org.dutchaug.hackathon.soakingwet.views.WeatherClock
@@ -19,5 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/mainactivity_text" />
+
+</RelativeLayout>
+    <ImageView
+        android:id="@+id/display_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/description"
+        android:contentDescription="@string/app_name" />
 
 </RelativeLayout>
