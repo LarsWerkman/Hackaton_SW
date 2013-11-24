@@ -4,5 +4,9 @@
     <string name="app_name">SoakingWet</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="test_pref">Test pref</string>
+    <string name="configuration_text">configuratoin text</string>
+    <string name="extension_name">SoakingWet</string>
+    <string name="preference_activity_title">SoakingWet preferences</string>
 
 </resources>
