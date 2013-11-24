@@ -38,10 +38,10 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
         locationClient = new LocationClient(this, this, this);
         setContentView(R.layout.activity_main);
         
-        latitude = 54.0d;
+        latitude = 52.0d;
         longtitude = 4.0d;
         
-        AsyncTask<Double, Integer, Map<String,String>> data = new WDownloader().execute(latitude , longtitude);
+        AsyncTask<Double, Integer, String> data = new WDownloader().execute(latitude , longtitude);
         
     }
 
@@ -113,15 +113,15 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
         // TODO Auto-generated method stub
     }
     
-    class WDownloader extends AsyncTask<Double, Integer, Map<String,String>> {
+    class WDownloader extends AsyncTask<Double, Integer, String> {
     	
     	private WeatherDataCollector weatherDataCollector = new WeatherDataCollector();
 
 		@SuppressLint("DefaultLocale")
 		@Override
-		protected Map<String,String> doInBackground(Double... params) {
+		protected String doInBackground(Double... params) {
 			try {
-				return weatherDataCollector.getPrecipitationForLatLong(latitude, longtitude);
+				return weatherDataCollector.getTimeToRain(latitude, longtitude);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
