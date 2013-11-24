@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/smart_watch_2_control_width"
+    android:layout_height="@dimen/smart_watch_2_control_height"
+    tools:ignore="ContentDescription,PxUsage" >
+
+    <TextView
+        android:id="@+id/sample_control_text_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="12px"
+        android:layout_marginTop="10px"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/smart_watch_2_text_size_large" />
+
+    <ImageView
+        android:id="@+id/animatedImage"
+        android:layout_width="150px"
+        android:layout_height="150px"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/sample_control_text_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10px"
+        android:layout_marginRight="12px"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/smart_watch_2_text_size_large" />
+
+</RelativeLayout>
