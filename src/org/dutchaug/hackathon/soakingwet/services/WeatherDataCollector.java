@@ -1,4 +1,4 @@
-package org.dutchaug.hackathon.soakingwet;
+package org.dutchaug.hackathon.soakingwet.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -15,7 +15,8 @@ public class WeatherDataCollector {
 	public int getPrecipitationForLatLong(double latitude, double longtitude) throws IOException {
 		// between 0 and 255
 
-		String pipeSeperatedFile = get(new URL("http://gps.buienradar.nl/getrr.php?lat=52&lon=4"));
+		String buienRadarUrl = String.format("http://gps.buienradar.nl/getrr.php?lat=%1$,.2f&lon=%1$,.2f", latitude, longtitude);
+		String pipeSeperatedFile = get(new URL(buienRadarUrl));
 
 		System.out.println(pipeSeperatedFile);
 		return 0;

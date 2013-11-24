@@ -2,12 +2,11 @@ package org.dutchaug.hackathon.soakingwet;
 
 import org.dutchaug.hackathon.soakingwet.dialog.ErrorDialogFragment;
 
+import org.dutchaug.hackathon.soakingwet.services.WeatherDataCollector;
+
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.AsyncTaskLoader;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -16,8 +15,9 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 	
-	WeatherDataCollector wdc = new WeatherDataCollector();
-
+	private double latitude;
+	private double longtitude;
+	
 public class MainActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationClient locationClient;
@@ -27,7 +27,12 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
         super.onCreate(savedInstanceState);
         locationClient = new LocationClient(this, this, this);
         setContentView(R.layout.activity_main);
-
+        
+        latitude = 54.0d;
+        longtitude = 4.0d;
+        
+        WDownloader downloader = new WDownloader(this);
+        
     }
 
     @Override
@@ -97,4 +102,26 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
     public void onDisconnected() {
         // TODO Auto-generated method stub
     }
+    class WDownloader extends AsyncTaskLoader<String> {
+    	
+    	private WeatherDataCollector weatherDataCollector = new WeatherDataCollector();
+
+		public WDownloader(Activity activity) {
+			super(activity);
+		}
+
+		@Override
+		public String loadInBackground() {
+			try {
+				return  String.format("%d", weatherDataCollector.getPrecipitationForLatLong(latitude, longtitude));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+    	
+    	
+    }
+
+    
 }
