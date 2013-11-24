@@ -1,12 +1,20 @@
 package org.dutchaug.hackathon.soakingwet;
 
+import java.io.IOException;
+import java.util.Map;
+
 import org.dutchaug.hackathon.soakingwet.dialog.ErrorDialogFragment;
 
 import org.dutchaug.hackathon.soakingwet.services.WeatherDataCollector;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.widget.TextView;
 
@@ -15,12 +23,14 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 	
-	private double latitude;
-	private double longtitude;
 	
 public class MainActivity extends FragmentActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
-    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+    
+	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private LocationClient locationClient;
+    
+	private double latitude;
+	private double longtitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +41,7 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
         latitude = 54.0d;
         longtitude = 4.0d;
         
-        WDownloader downloader = new WDownloader(this);
+        AsyncTask<Double, Integer, String> data = new WDownloader().execute(latitude , longtitude);
         
     }
 
@@ -102,26 +112,21 @@ public class MainActivity extends FragmentActivity implements GooglePlayServices
     public void onDisconnected() {
         // TODO Auto-generated method stub
     }
-    class WDownloader extends AsyncTaskLoader<String> {
+    
+    class WDownloader extends AsyncTask<Double, Integer, Map<String,String>> {
     	
     	private WeatherDataCollector weatherDataCollector = new WeatherDataCollector();
 
-		public WDownloader(Activity activity) {
-			super(activity);
-		}
-
+		@SuppressLint("DefaultLocale")
 		@Override
-		public String loadInBackground() {
+		protected Map<String,String> doInBackground(Double... params) {
 			try {
-				return  String.format("%d", weatherDataCollector.getPrecipitationForLatLong(latitude, longtitude));
+				return weatherDataCollector.getPrecipitationForLatLong(latitude, longtitude);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			return null;
 		}
-    	
-    	
     }
-
     
 }
