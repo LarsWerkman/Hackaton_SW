@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.dutchaug.hackathon.soakingwet.R;
+
 import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -80,8 +82,24 @@ public class WeatherDataCollector {
 		} else if(rainTypesComming.containsKey(DRY)) {
 			commingUpNext = String.format("%s till %s", DRY, rainTypesComming.get(DRY));
 		}
-		
 		return commingUpNext;
+	}
+	
+	public int getIconForUpcomingWeather(double latitude, double longtitude) throws IOException {
+		Map<String, String> rainTypesComming = getRainTypeMap(getPrecipitationForLatLong(latitude, longtitude));
+		int iconId = R.drawable.ic_dry;
+		if(rainTypesComming.containsKey(EXTREME_RAIN)) {
+			iconId = R.drawable.ic_extreme_rain;
+		} else if(rainTypesComming.containsKey(HEAVY_RAIN)) {
+			iconId = R.drawable.ic_heavy_rain;
+		} else if(rainTypesComming.containsKey(RAIN)) {
+			iconId = R.drawable.ic_rain;
+		} else if(rainTypesComming.containsKey(LIGHT_RAIN)) {
+			iconId = R.drawable.ic_light_rain;
+		} else if(rainTypesComming.containsKey(DRY)) {
+			iconId = R.drawable.ic_dry;
+		}
+		return iconId;
 	}
 
 	private String get(URL url) throws IOException {
